@@ -1,30 +1,51 @@
-
-
-#' get_velocity
+#' get_velocity TODO
 #'
-#' @param data tibble
-#' @param time_interval a number in milliseconds
+#' @param data a tibble TODO
+#' @param time_interval a number in seconds, used when the methods is `diff` TODO
+#' @param methods `diff`, `delta` TODO
 #'
 #' @return a tibble of velocity samples
 #' @export
 #'
-#' @examples get_velocity(data)
+#' @examples get_velocity(data) TODO
 #'
-get_velocity <- function(data, time_interval = 100){
-  results <- data %>%
-    group_by(Experiment, Participant, Condition, Device, Platform, Trial) %>%
-    arrange(Timestamp) %>%
-    mutate(if_keep = if_else(Timestamp - lag(Timestamp) - time_interval >= 0, T, F)) %>%
-    filter(if_keep) %>%
-    mutate(velocity = sqrt((x - lag(x))^2 + (y - lag(y))^2 + (z - lag(z))^2) / (Timestamp - lag(Timestamp)),
-           velocity_x = (x - lag(x))/ (Timestamp - lag(Timestamp)),
-           velocity_y = (y - lag(y))/ (Timestamp - lag(Timestamp)),
-           velocity_z = (z - lag(z))/ (Timestamp - lag(Timestamp))
-           )%>%
-    select(-if_keep)%>%
-    ungroup()%>%
-    drop_na()
+get_velocity <- function(data, time_interval = .1, methods = "diff"){
 
-  return(results)
+  if(methods == "diff"){
+    results <- data %>%
+      group_by(Experiment, Participant, Condition, Device, Platform, Trial) %>%
+      arrange(Timestamp) %>%
+      mutate(time = Timestamp / 1000.0,
+             if_keep = if_else(time - lag(time) - time_interval >= .1, T, F)) %>%
+      filter(if_keep) %>%
+      mutate(velocity = sqrt((x - lag(x))^2 + (y - lag(y))^2 + (z - lag(z))^2) / (time - lag(time)),
+             velocity_x = (x - lag(x))/ (time - lag(time)),
+             velocity_y = (y - lag(y))/ (time - lag(time)),
+             velocity_z = (z - lag(z))/ (time - lag(time))
+      )%>%
+      select(-if_keep, -time)%>%
+      ungroup()%>%
+      drop_na()
+
+    return(results)
+  }
+
+  if(methods == "delta"){
+    results <- data %>%
+      group_by(Experiment, Participant, Condition, Device, Platform, Trial) %>%
+      arrange(Timestamp) %>%
+      mutate(time = Timestamp / 1000.0,
+             velocity = sqrt((x - lag(x, k = 2))^2 + (y - lag(y, k = 2))^2 + (z - lag(z, k = 2))^2) / (time - lag(time, k = 2)),
+             velocity_x = (x - lag(x, k = 2))/ (time - lag(time, k = 2)),
+             velocity_y = (y - lag(y, k = 2))/ (time - lag(time, k = 2)),
+             velocity_z = (z - lag(z, k = 2))/ (time - lag(time, k = 2))
+      )%>%
+      select(-time)%>%
+      ungroup()%>%
+      drop_na()
+
+
+    return(results)
+  }
 
 }

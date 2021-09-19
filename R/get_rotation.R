@@ -1,12 +1,12 @@
 #' Title
 #'
-#' @param data a tibble
-#' @param time_interval a number
+#' @param data a tibble TODO
+#' @param time_interval a number TODO
 #'
-#' @return a tibble
+#' @return a tibble TODO
 #' @export
 #'
-#' @examples get_rotation(data)
+#' @examples get_rotation(data) TODO
 get_rotation <- function(data, time_interval = 0){
   results <- data %>%
     group_by(Experiment, Participant, Condition, Device, Platform, Trial) %>%

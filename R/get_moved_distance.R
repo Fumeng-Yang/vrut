@@ -5,10 +5,9 @@
 #' @return a tibble with Experiment, Participant, Condition, Trial, Device, and a moved_distance column
 #' @export
 #'
-#' @examples get_moved_distance(data)
-#' todo: refactor using variables, keep other columns
+#' @examples get_moved_distance(data) TODO
 get_moved_distance <- function(data){
-
+   # TODO: refactor using variables, keep other columns
    results <- data %>%
     group_by(Experiment, Participant, Condition, Device, Platform, Trial) %>%
     arrange(Timestamp) %>%
@@ -17,5 +16,4 @@ get_moved_distance <- function(data){
     ungroup()
 
    return(results)
-
 }

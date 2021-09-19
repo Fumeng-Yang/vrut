@@ -4,12 +4,14 @@
 \alias{get_velocity}
 \title{get_velocity}
 \usage{
-get_velocity(data, time_interval = 100)
+get_velocity(data, time_interval = 100, methods = "diff")
 }
 \arguments{
 \item{data}{tibble}
 
-\item{time_interval}{a number in milliseconds}
+\item{time_interval}{a number in milliseconds, used when the methods is \code{diff}}
+
+\item{methods}{\code{diff}, \code{delta}}
 }
 \value{
 a tibble of velocity samples
