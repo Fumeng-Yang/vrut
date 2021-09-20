@@ -14,7 +14,6 @@
 get_local_maximum <- function(data, time_interval = .1, methods = "delta"){
 
    d_velocity <- get_velocity(data, time_interval, methods)
-   #print(nrow(d_velocity))
    results <- d_velocity %>%
      group_by(Experiment, Participant, Condition, Device, Platform, Trial) %>%
      filter(if_else((lag(velocity) > velocity) & (lag(velocity) > lag(velocity, k = 2)), F, T))

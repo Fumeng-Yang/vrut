@@ -1,17 +1,17 @@
 #' get_velocity TODO
 #'
 #' @param data a tibble TODO
-#' @param time_interval a number in seconds, used when the methods is `diff` TODO
-#' @param methods `diff`, `delta` TODO
+#' @param time_interval a number in seconds, used when the method is `diff` TODO
+#' @param method `diff`, `delta` TODO
 #'
 #' @return a tibble of velocity samples
 #' @export
 #'
 #' @examples get_velocity(data) TODO
 #'
-get_velocity <- function(data, time_interval = .1, methods = "diff"){
+get_velocity <- function(data, time_interval = .1, method = "diff"){
 
-  if(methods == "diff"){
+  if(method == "diff"){
     results <- data %>%
       group_by(Experiment, Participant, Condition, Device, Platform, Trial) %>%
       arrange(Timestamp) %>%
@@ -30,7 +30,7 @@ get_velocity <- function(data, time_interval = .1, methods = "diff"){
     return(results)
   }
 
-  if(methods == "delta"){
+  if(method == "delta"){
     results <- data %>%
       group_by(Experiment, Participant, Condition, Device, Platform, Trial) %>%
       arrange(Timestamp) %>%
