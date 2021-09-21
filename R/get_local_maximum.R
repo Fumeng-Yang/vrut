@@ -11,12 +11,12 @@
 #' @export
 #'
 #' @examples get_local_maximum(data) TODO
-get_local_maximum <- function(data, time_interval = .1, methods = "delta"){
+get_local_maximum <- function(velocities, time_interval = .1, methods = "delta"){
 
-   d_velocity <- get_velocity(data, time_interval, methods)
-   results <- d_velocity %>%
-     group_by(Experiment, Participant, Condition, Device, Platform, Trial) %>%
-     filter(if_else((lag(velocity) > velocity) & (lag(velocity) > lag(velocity, k = 2)), F, T))
+   #d_velocity <- get_velocity(data, time_interval, methods)
+   results <- velocities %>%
+     #group_by(Experiment, Participant, Condition, Device, Platform, Trial) %>%
+     filter(if_else((velocity > lag(velocity)) & (velocity > lead(velocity)), T, F))
 
    return(results)
 

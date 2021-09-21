@@ -8,7 +8,7 @@
 #' @examples TODO
 estimate_hz <- function(data){
   results <- data %>%
-    group_by(Experiment, Participant, Condition, Device, Platform, Trial) %>%
+    #group_by(Experiment, Participant, Condition, Device, Platform, Trial) %>%
     arrange(Timestamp)%>%
     mutate(time = Timestamp / 1000,
       time_delta = time - lag(time),

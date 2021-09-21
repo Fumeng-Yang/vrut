@@ -1,7 +1,7 @@
 #' Title
 #'
 #' @param data
-#' @param hz_method which method to estimate hz
+#' @param hz_methods which method to estimate hz
 #' @param plot
 #' @param h the span passing to loess regression
 #'
@@ -9,21 +9,16 @@
 #' @export
 #'
 #' @examples
-find_mould_velocity_threshold <- function(data, hz_method = "median", h = NULL, plot = F){
+find_mould_velocity_threshold <- function(data, Hz = 10, h = NULL, plot = F){
   #https://github.com/cran/gazepath/blob/master/R/Mould_vel.R
 
-  d_local_max_velocity <- get_local_maximum(data, methods = "delta")$velocity
-  d_hz <- estimate_hz(data)
-
-  if(hz_method == "median"){
-    Hz <- round(d_hz$`median_hz`)
-  }else{
-    Hz <- round(d_hz$`mean_hz`)
-  }
-
-  message(paste0("estimated Hz is ", Hz))
+  df_local_max_velocity <- get_local_maximum(data, methods = "delta") %>% filter(!is.infinite(velocity))
+  d_local_max_velocity <- df_local_max_velocity$velocity
 
   vmax <- max(d_local_max_velocity)
+
+  message(paste0("load max velocity is ", vmax))
+
   if(length(d_local_max_velocity) < 10){
     return(NA)
     warning("no enough data to estimate a velocity threshold")

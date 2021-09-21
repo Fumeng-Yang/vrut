@@ -9,7 +9,7 @@
 #'
 #' @examples get_velocity(data) TODO
 #'
-get_velocity <- function(data, time_interval = .1, method = "diff"){
+get_velocity <- function(data, time_interval = .1, method = "delta"){
 
   if(method == "diff"){
     results <- data %>%
