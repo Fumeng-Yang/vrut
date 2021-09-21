@@ -19,29 +19,7 @@ classify_fixation_saccade <- function(data, method,
    # Identifying Fixations and Saccades in Eye-Tracking Protocols
    if(method == "velocity"){
       velocity_results <-  data_velocity %>%
-        mutate(class = if_else(velocity - velocity_threshold >= 0, "saccade", "fixation")) %>%
-        group_by(Experiment, Participant, Condition, Device, Platform, Trial) %>%
-        mutate(test = (function(x){
-          print(x)
-          return(x)})(velocity))
-
-      # fixation_counter <- 1
-      # fixation_cluster_class <- c(NA)
-      # class <- velocity_results$class
-      # for(i in 2:length(velocity_results)){
-      #   if(class[i] == "fixation"){
-      #     if(class[i] != class[i - 1]){
-      #       fixation_counter + 1
-      #     }
-      #     fixation_cluster_class <- rbind(fixation_cluster_class, paste0("class_", fixation_counter))
-      #   }else{
-      #     fixation_cluster_class <- rbind(fixation_cluster_class, NA)
-      #   }
-      # }
-
-
-
-      return(NA)
+        mutate(class = if_else(velocity - velocity_threshold >= 0, "saccade", "fixation"))
    }
 
    if(method == "dispersion"){
@@ -76,4 +54,31 @@ classify_fixation_saccade <- function(data, method,
   if(method == "mould_all_duration"){
 
   }
+
+  velocity_results <- velocity_results %>%
+  group_by(Experiment, Participant, Condition, Device, Platform, Trial) %>%
+    mutate(fixation_index = (function(classes){
+      fixation_count <- 1
+      fixation_results <- c()
+      for(i in 1:length(classes)){
+        if(i == 1){
+          if(classes[1] == "fixation")
+            fixation_results <- c(paste0("fixation_", fixation_count))
+          else
+            fixation_results <- c(NA)
+        }else if(classes[i] == "fixation" & classes[i] != classes[i-1]){
+          fixation_count <- fixation_count + 1
+          fixation_results <- rbind(fixation_results, paste0("fixation_", fixation_count))
+          #print(fixation_results)
+        }else if (classes[i] == "fixation" & classes[i] == classes[i-1]){
+          fixation_results <- rbind(fixation_results, paste0("fixation_", fixation_count))
+        }else{
+          fixation_results <- rbind(fixation_results, NA)
+        }
+      }
+      return(fixation_results)})(class)) %>%
+    drop_na() %>%
+    summarise(x = mean(x), y = mean(y), z = mean(z), fixation_index=first(fixation_index))
+
+  return(velocity_results)
 }
