@@ -34,6 +34,7 @@ classify_fixation_saccade <- function(data, method,
        mutate(class = (function(x,y,z){
          i_left <- 1
          min_num <- max(1, estimated_hz)
+         #message(paste0("Participant ", Participant))
          message(paste0("initial window size ", min_num))
          i_right <- min_num + i_left
          length_tmp <- length(x)
@@ -45,11 +46,13 @@ classify_fixation_saccade <- function(data, method,
                              max(z[i_left:i_right]) - min(z[i_left:i_right])
 
            if(dispersion - dispersion_threshold <= 0){
-             fixation_list[i_left:i_right] <- 'fixation'
+             if(fixation_list[i_right - 1] == 'fixation'){
+               fixation_list[i_right] <- 'fixation'
+             }else{
+               fixation_list[i_left:i_right] <- 'fixation'
+             }
              i_right <- i_right + 1
-           }
-
-           if(dispersion - dispersion_threshold > 0){
+           }else{
              i_left <- i_left + 1
              i_right <- i_left + min_num
            }
@@ -123,7 +126,7 @@ classify_fixation_saccade <- function(data, method,
         return(fixation_results)})(class)) %>%
       drop_na() %>%
       #group_by(Experiment, Participant, Condition, Device, Platform, Trial, fixation_index)%>%
-      group_by(fixation_index)%>%
+      group_by(fixation_count)%>%
       summarise(x = mean(x), y = mean(y), z = mean(z))
     return(results)
   }else{
