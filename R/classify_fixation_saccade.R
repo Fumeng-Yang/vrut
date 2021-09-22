@@ -30,7 +30,7 @@ classify_fixation_saccade <- function(data, method,
    if(method == "dispersion"){
      raw_results <-  data %>%
        group_by(Experiment, Participant, Condition, Device, Platform, Trial) %>%
-       arrange(.,Timestamp)%>%
+       arrange(Timestamp)%>%
        mutate(class = (function(x,y,z){
          i_left <- 1
          min_num <- max(1, estimated_hz)
