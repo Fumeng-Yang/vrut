@@ -1,13 +1,13 @@
 #' Title
 #'
-#' @param data
-#' @param method
-#' @param velocity_threshold
+#' @param data TODO
+#' @param method TODO
+#' @param velocity_threshold TODO
 #'
-#' @return
+#' @return TODO
 #' @export
 #'
-#' @examples
+#' @examples TODO
 classify_fixation_saccade <- function(data, method,
                                       velocity_threshold = .15,
                                       duration_threshold = 1,

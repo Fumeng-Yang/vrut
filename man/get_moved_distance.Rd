@@ -16,5 +16,5 @@ a tibble with Experiment, Participant, Condition, Trial, Device, and a moved_dis
 calculate cumulative moving distances for each experiment, participant, condition, and device
 }
 \examples{
-get_moved_distance(data)
+get_moved_distance(data) TODO
 }

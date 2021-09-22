@@ -1,11 +1,11 @@
 #' Title
 #'
-#' @param data
+#' @param data TODO
 #' @param hz_methods which method to estimate hz
-#' @param plot
+#' @param plot TODO
 #' @param h the span passing to loess regression
 #'
-#' @return
+#' @return TODO
 #' @export
 #'
 #' @examples

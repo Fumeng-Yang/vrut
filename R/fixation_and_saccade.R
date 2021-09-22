@@ -2,12 +2,12 @@
 
 #' Title
 #'
-#' @param velocities
-#' @param mould_velocity_threshold
-#' @param mould_duration_threshold
-#' @param Hz
+#' @param velocities TODO
+#' @param mould_velocity_threshold TODO
+#' @param mould_duration_threshold TODO
+#' @param Hz TODO
 #'
-#' @return
+#' @return TODO
 #' @export
 #'
 #' @examples

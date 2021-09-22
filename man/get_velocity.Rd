@@ -2,24 +2,24 @@
 % Please edit documentation in R/get_velocity.R
 \name{get_velocity}
 \alias{get_velocity}
-\title{get_velocity}
+\title{get_velocity TODO}
 \usage{
-get_velocity(data, time_interval = 100, methods = "diff")
+get_velocity(data, time_interval = 0.1, method = "delta")
 }
 \arguments{
-\item{data}{tibble}
+\item{data}{a tibble TODO}
 
-\item{time_interval}{a number in milliseconds, used when the methods is \code{diff}}
+\item{time_interval}{a number in seconds, used when the method is \code{diff} TODO}
 
-\item{methods}{\code{diff}, \code{delta}}
+\item{method}{\code{diff}, \code{delta} TODO}
 }
 \value{
 a tibble of velocity samples
 }
 \description{
-get_velocity
+get_velocity TODO
 }
 \examples{
-get_velocity(data)
+get_velocity(data) TODO
 
 }

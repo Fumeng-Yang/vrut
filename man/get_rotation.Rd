@@ -7,16 +7,16 @@
 get_rotation(data, time_interval = 0)
 }
 \arguments{
-\item{data}{a tibble}
+\item{data}{a tibble TODO}
 
-\item{time_interval}{a number}
+\item{time_interval}{a number TODO}
 }
 \value{
-a tibble
+a tibble TODO
 }
 \description{
 Title
 }
 \examples{
-get_rotation(data)
+get_rotation(data) TODO
 }
