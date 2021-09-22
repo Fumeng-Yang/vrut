@@ -29,7 +29,7 @@ classify_fixation_saccade <- function(data, method,
 
    if(method == "dispersion"){
      raw_results <-  data %>%
-       #group_by(Experiment, Participant, Condition, Device, Platform, Trial) %>%
+       group_by(Experiment, Participant, Condition, Device, Platform, Trial) %>%
        arrange(.,Timestamp)%>%
        mutate(class = (function(x,y,z){
          i_left <- 1
@@ -99,7 +99,7 @@ classify_fixation_saccade <- function(data, method,
 
   if(raw_output==F){
    results <- raw_results %>%
-    #group_by(Experiment, Participant, Condition, Device, Platform, Trial) %>%
+     group_by(Experiment, Participant, Condition, Device, Platform, Trial) %>%
      arrange(Timestamp)%>%
       mutate(fixation_index = (function(classes){
         fixation_count <- 1
