@@ -110,14 +110,14 @@ classify_fixation_saccade <- function(data, method,
         for(i in 1:length(classes)){
           if(i == 1){
             if(classes[i] == "fixation")
-              fixation_results <- c(paste0("fixation_", fixation_count))
+              fixation_results <- c(fixation_count)
             else
               fixation_results <- c(NA)
           }else if(classes[i] == "fixation" & classes[i] != classes[i-1]){
             fixation_count <- fixation_count + 1
-            fixation_results <- rbind(fixation_results, paste0("fixation_", fixation_count))
+            fixation_results <- rbind(fixation_results, fixation_count)
           }else if (classes[i] == "fixation" & classes[i] == classes[i-1]){
-            fixation_results <- rbind(fixation_results, paste0("fixation_", fixation_count))
+            fixation_results <- rbind(fixation_results, fixation_count)
           }else{
             fixation_results <- rbind(fixation_results, NA)
           }
@@ -125,9 +125,7 @@ classify_fixation_saccade <- function(data, method,
         }
         return(fixation_results)})(class)) %>%
       drop_na() %>%
-      #group_by(Experiment, Participant, Condition, Device, Platform, Trial, fixation_index)%>%
-      group_by(fixation_count)%>%
-      summarise(x = mean(x), y = mean(y), z = mean(z))
+      summarise(x = mean(x), y = mean(y), z = mean(z), fixation_index = first(fixation_index))
     return(results)
   }else{
     return(raw_results)
